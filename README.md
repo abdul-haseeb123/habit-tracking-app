@@ -14,7 +14,7 @@ Habit Tracker is a Python application that helps you manage and track your habit
 1. Clone the repository:
 
 ```sh
-git clone <https://github.com/abdul-haseeb123/habit-tracking-app>
+git clone https://github.com/abdul-haseeb123/habit-tracking-app.git
 ```
 
 2. Navigate to the project directory:
