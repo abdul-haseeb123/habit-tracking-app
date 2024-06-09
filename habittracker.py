@@ -50,6 +50,9 @@ class HabitTracker:
         habit = Habit.create_habit_from_cli()
         if habit.name in [habit.name for habit in self.data]:
             print(f"Habit with name {habit.name} already exists")
+            return
+        print(f"\tYour habit '{habit.name}' has been created successfully")
+        print("\tYou can now check off this habit")
         self.data.append(habit)
 
     def save_habit(self, habit: Habit):
@@ -69,10 +72,9 @@ class HabitTracker:
 
         This method prints a list of all habits in the data list. Each habit is printed on a new line.
         """
-        i = 1
-        for habit in self.data:
-            print(f"\t{i}. {habit.name}")
-            i += 1
+        for i, habit in enumerate(self.data):
+            print(f"\t{i+1}. {habit.name} (Periodicity: {habit.periodicity})")
+            
 
     def update_habit(self):
         """
@@ -84,10 +86,11 @@ class HabitTracker:
         Raises:
             ValueError: If a habit with the entered name does not exist in the data list.
         """
-        print("Habits that can be checked off:")
-        for habit in self.data:
+        print("\tHabits that can be checked off:")
+        for i, habit in enumerate(self.data):
             if habit.can_check_off():
-                print(habit.name)
+                last_checked_off = len(habit.completion_dates) > 0 and habit.date(habit.completion_dates[-1]) or 'Never'
+                print(f"\t{i+1}. {habit.name} (Periodicity: {habit.periodicity}) (Last checked off: {last_checked_off})")
         habit_name = input("\tEnter the name of the habit you want to check off: ")
         try:
             habit, index = self.find_habit_from_name(habit_name)
@@ -96,9 +99,9 @@ class HabitTracker:
             if habit.can_check_off():
                 habit.check_off()
                 self.data[index] = habit
-                print(f"Checked off habit: {habit}")
+                print(f"\tChecked off habit: {habit}")
             else:
-                print("You can't check off this habit yet")
+                print("\tYou can't check off this habit yet")
         except ValueError as e:
             print(e)
 

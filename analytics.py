@@ -118,8 +118,6 @@ def habits_analytics(tracker: HabitTracker):
                 print("Habit not found")
                 continue
             habit = tracker.find_habit_from_name(habit_name)[0]
-            print(habit)
-            print("habits analytics, ", habit.completion_dates)
             shortest, average, longest, streaks = get_habit_streaks(habit)
             print(f"\tShortest Streak: {shortest}")
             print(f"\tAverage Streak: {average}")
